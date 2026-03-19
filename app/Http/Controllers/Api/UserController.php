@@ -27,26 +27,25 @@ class UserController extends Controller
                 confirmed'
         ]));
         $user->save();
-        return response()->json($user, 201);
+        return response()->json($user);
     }
 
-    public function show(User $user): User
+    public function show(User $user): JsonResponse
     {
-        return $user;
+        return response()->json($user);
     }
 
     public function update(Request $request, User $user): JsonResponse
     {
         $user->update($request->validate([
-            'name' => 'required|string|max:25',
-            'email' => 'required|string|email|unique:users|max:50',
+            'name' => 'string|max:25',
+            'email' => 'string|email|unique:users|max:50',
             'password' =>
-                'required|
-                regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
+                'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
                 min:8|
                 confirmed'
         ]));
-        return response()->json($user, 201);
+        return response()->json($user);
     }
 
     public function destroy(User $user): JsonResponse
