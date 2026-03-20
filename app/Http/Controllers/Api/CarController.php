@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Car;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class CarController extends Controller
 {
@@ -29,7 +29,7 @@ class CarController extends Controller
         ]));
 
         $car->save();
-        return response()->json($car, 201);
+        return response()->json($car);
     }
 
     public function show(Car $car): JsonResponse
