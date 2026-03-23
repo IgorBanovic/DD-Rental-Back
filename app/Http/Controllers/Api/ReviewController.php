@@ -36,10 +36,10 @@ class ReviewController extends Controller
     public function update(Request $request, Review $review): JsonResponse
     {
         $review->update($request->validate([
-            'rate' => 'integer|min:1|max:10',
-            'comment' => 'string|max:255',
-            'car_id' => 'exists:cars,id',
-            'user_id' => 'exists:users,id'
+            'rate' => 'sometimes|integer|min:1|max:10',
+            'comment' => 'sometimes|string|max:255',
+            'car_id' => 'sometimes|exists:cars,id',
+            'user_id' => 'sometimes|exists:users,id'
         ]));
 
         return response()->json($review);

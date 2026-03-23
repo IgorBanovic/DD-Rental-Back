@@ -37,11 +37,11 @@ class ReservationController extends Controller
     public function update(Request $request, Reservation $reservation): JsonResponse
     {
         $reservation->update($request->validate([
-            'start_date' => 'date|after:now',
-            'end_date' => 'date|after:start_date',
-            'user_id' => 'exists:users,id',
-            'car_id' => 'exists:cars,id',
-            'price' => 'numeric'
+            'start_date' => 'sometimes|date|after:now',
+            'end_date' => 'sometimes|date|after:start_date',
+            'user_id' => 'sometimes|exists:users,id',
+            'car_id' => 'sometimes|exists:cars,id',
+            'price' => 'sometimes|numeric'
         ]));
 
         return response()->json($reservation);
