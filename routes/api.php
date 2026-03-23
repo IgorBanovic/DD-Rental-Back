@@ -13,10 +13,11 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('/users')->controller(UserController::class)->group(function () {
     Route::get('/', 'index');
-    Route::post('/', 'store');
     Route::get('/{user}', 'show');
     Route::put('/{user}', 'update');
     Route::delete('/{user}', 'destroy');
+    Route::Post('/register', [UserController::class, 'createUser']);
+    Route::Post('/login', [UserController::class, 'loginUser']);
 });
 
 Route::prefix('/cars')->controller(CarController::class)->group(function () {
