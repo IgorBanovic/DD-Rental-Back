@@ -38,10 +38,10 @@ class UserController extends Controller
     public function update(Request $request, User $user): JsonResponse
     {
         $user->update($request->validate([
-            'name' => 'sometimes|string|max:25',
-            'email' => 'sometimes|string|email|unique:users|max:50',
+            'name' => 'string|max:25',
+            'email' => 'string|email|unique:users|max:50',
             'password' =>
-                'sometimes|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
+                'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
                 min:8|
                 confirmed'
         ]));
