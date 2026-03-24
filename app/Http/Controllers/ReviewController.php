@@ -6,7 +6,6 @@ use App\Http\Requests\Review\StoreReviewRequest;
 use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
@@ -17,8 +16,7 @@ class ReviewController extends Controller
 
     public function store(StoreReviewRequest $request): JsonResponse
     {
-        $review = $request;
-        $review->save();
+        $review = Review::create($request->validated());
         return response()->json($review, 201);
     }
 
@@ -29,9 +27,7 @@ class ReviewController extends Controller
 
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
-        $null;
-        $review = $request;
-        $review->save();
+        $review->update($request->validated());
         return response()->json($review);
     }
 
