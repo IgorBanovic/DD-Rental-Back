@@ -29,6 +29,7 @@ class ReviewController extends Controller
 
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
+        $null;
         $review = $request;
         $review->save();
         return response()->json($review);
