@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\authController;
+use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\ResetPasswordController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -16,20 +19,22 @@ Route::prefix('/users')->controller(UserController::class)->group(function () {
     Route::get('/{user}', 'show');
     Route::put('/{user}', 'update');
     Route::delete('/{user}', 'destroy');
-    Route::get('/{user}/reservations', 'getReservations');
+
 });
-Route::Post('/register', [UserController::class, 'createUser']);
-Route::Post('/login', [UserController::class, 'loginUser']);
+
+Route::Post('/logout', [authController::class, 'logout']);
+Route::Post('/register', [authController::class, 'createUser']);
+Route::Post('/login', [authController::class, 'loginUser']);
+Route::Post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::Post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 Route::prefix('/cars')->controller(CarController::class)->group(function () {
     Route::get('/', 'index');
     Route::post('/', 'store');
-    Route::get('/availableCarsForDates', 'availableCarsForDates');
     Route::get('/{car}', 'show');
     Route::put('/{car}', 'update');
     Route::delete('/{car}', 'destroy');
     Route::put('/status/{car}', 'updateStatus');
-    Route::get('/{car}/reviews', 'getReviews');
 });
 
 Route::prefix('/reservations')->controller(ReservationController::class)->group(function () {
