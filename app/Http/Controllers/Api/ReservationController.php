@@ -27,7 +27,7 @@ class ReservationController extends Controller
 
         $reservation = $this->createReservation($request);
         $reservation->save();
-        return response()->json($reservation->withoutRelations());
+        return response()->json($reservation->withoutRelations(), 201);
     }
 
     public function createReservation(Request $request): Reservation

@@ -21,10 +21,11 @@ Route::prefix('/users')->controller(UserController::class)->group(function () {
     Route::delete('/{user}', 'destroy');
     Route::post('/{user}/reservations', 'getReservations');
 });
-
-Route::Post('/logout', [authController::class, 'logout']);
-Route::Post('/register', [authController::class, 'createUser']);
-Route::Post('/login', [authController::class, 'loginUser']);
+Route::controller(authController::class)->group(function () {
+    Route::Post('/logout', 'logout');
+    Route::Post('/register', 'createUser');
+    Route::Post('/login', 'loginUser');
+});
 Route::Post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::Post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 
