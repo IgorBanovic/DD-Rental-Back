@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    //
     public function index(): JsonResponse
     {
         return response()->json(Review::all());
