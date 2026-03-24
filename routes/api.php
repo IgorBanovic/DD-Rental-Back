@@ -19,7 +19,7 @@ Route::prefix('/users')->controller(UserController::class)->group(function () {
     Route::get('/{user}', 'show');
     Route::put('/{user}', 'update');
     Route::delete('/{user}', 'destroy');
-
+    Route::post('/{user}/reservations', 'getReservations');
 });
 
 Route::Post('/logout', [authController::class, 'logout']);
@@ -31,10 +31,12 @@ Route::Post('/reset-password', [ResetPasswordController::class, 'resetPassword']
 Route::prefix('/cars')->controller(CarController::class)->group(function () {
     Route::get('/', 'index');
     Route::post('/', 'store');
+    Route::get('/availableCars', 'availableCarsForDates');
     Route::get('/{car}', 'show');
     Route::put('/{car}', 'update');
     Route::delete('/{car}', 'destroy');
-    Route::put('/status/{car}', 'updateStatus');
+    Route::put('/{car}/status', 'updateStatus');
+    Route::get('/{car}/reviews', 'getReviews');
 });
 
 Route::prefix('/reservations')->controller(ReservationController::class)->group(function () {
