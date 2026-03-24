@@ -35,7 +35,7 @@ class CarController extends Controller
         }
         $car->save();
 
-        return response()->json($car);
+        return response()->json($car, 201);
     }
 
     public function createCar(Request $request, string $imageName): Car

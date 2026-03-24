@@ -29,7 +29,7 @@ class UserController extends Controller
                 confirmed'
         ]));
         $user->save();
-        return response()->json($user);
+        return response()->json($user, 201);
     }
 
     public function show(User $user): JsonResponse

@@ -50,7 +50,7 @@ class authController extends Controller
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+            ], 201);
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -104,37 +104,6 @@ class authController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-    }
-
-    public function forgotPassword(Request $request): JsonResponse
-    {
-        $validateUser = Validator::make($request->all(), [
-            'email' => 'required|email'
-        ]);
-
-        if ($validateUser->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'validation error',
-                'errors' => $validateUser->errors()
-            ], 401);
-        }
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return response()->json([
-                'status' => true,
-                'message' => 'If email exists, link will be sent to your email.'
-            ]);
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Link is sent to your email.'
-        ]);
-
-
     }
 
     public function logout(): JsonResponse

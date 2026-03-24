@@ -23,7 +23,7 @@ class ReviewController extends Controller
             'user_id' => 'required|exists:users,id'
         ]));
         $review->save();
-        return response()->json($review);
+        return response()->json($review, 201);
     }
 
     public function show(Review $review): JsonResponse
