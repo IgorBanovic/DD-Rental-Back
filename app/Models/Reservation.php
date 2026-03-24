@@ -13,8 +13,7 @@ class Reservation extends Model
         'start_date',
         'end_date',
         'user_id',
-        'car_id',
-        'price'
+        'car_id'
     ];
 
     use HasFactory;

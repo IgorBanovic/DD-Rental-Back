@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(): Collection
+    public function index(): JsonResponse
     {
-        return User::all();
+        return response()->json(User::all());
     }
 
     public function store(Request $request): JsonResponse
@@ -38,10 +37,10 @@ class UserController extends Controller
     public function update(Request $request, User $user): JsonResponse
     {
         $user->update($request->validate([
-            'name' => 'string|max:25',
-            'email' => 'string|email|unique:users|max:50',
-            'password' =>
-                'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
+            'name' => 'required|string|max:25',
+            'email' => 'required|string|email|unique:users|max:50',
+            'password' => 'required|
+                regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
                 min:8|
                 confirmed'
         ]));
@@ -51,7 +50,11 @@ class UserController extends Controller
     public function destroy(User $user): JsonResponse
     {
         $user->delete();
-        return response()->json(null, 204);
+        return response()->json(['message' => 'User deleted successfully'], 204);
     }
 
+    public function getReservations(User $user): JsonResponse
+    {
+        return response()->json($user->reservations);
+    }
 }

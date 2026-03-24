@@ -16,17 +16,20 @@ Route::prefix('/users')->controller(UserController::class)->group(function () {
     Route::get('/{user}', 'show');
     Route::put('/{user}', 'update');
     Route::delete('/{user}', 'destroy');
-    Route::Post('/register', [UserController::class, 'createUser']);
-    Route::Post('/login', [UserController::class, 'loginUser']);
+    Route::get('/{user}/reservations', 'getReservations');
 });
+Route::Post('/register', [UserController::class, 'createUser']);
+Route::Post('/login', [UserController::class, 'loginUser']);
 
 Route::prefix('/cars')->controller(CarController::class)->group(function () {
     Route::get('/', 'index');
     Route::post('/', 'store');
+    Route::get('/availableCarsForDates', 'availableCarsForDates');
     Route::get('/{car}', 'show');
     Route::put('/{car}', 'update');
     Route::delete('/{car}', 'destroy');
     Route::put('/status/{car}', 'updateStatus');
+    Route::get('/{car}/reviews', 'getReviews');
 });
 
 Route::prefix('/reservations')->controller(ReservationController::class)->group(function () {
