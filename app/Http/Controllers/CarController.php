@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Car\StoreCarRequest;
+use App\Http\Requests\Car\UpdateCarRequest;
 use App\Models\Car;
 use App\Rules\MoreThan24H;
 use Carbon\Carbon;
@@ -16,17 +17,8 @@ class CarController extends Controller
         return response()->json(Car::all());
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreCarRequest $request): JsonResponse
     {
-        $request->validate([
-            'type' => 'required|in:coupe,limousine,SUV',
-            'brand' => 'required|in:Volkswagen,Skoda',
-            'year' => 'required|numeric|min:2000|max:' . date('Y'),
-            'price' => 'required|numeric',
-            'status' => 'required|in:returned,in use,reserved',
-            'description' => 'required|string|min:50|max:250',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
         if(!$request->hasFile('image')){
             $car = new Car($request->all());
         }else{
@@ -38,7 +30,7 @@ class CarController extends Controller
         return response()->json($car, 201);
     }
 
-    public function createCar(Request $request, string $imageName): Car
+    public function createCar(StoreCarRequest $request, string $imageName): Car
     {
         $car = new Car();
         $car->type = $request->type;
@@ -63,29 +55,10 @@ class CarController extends Controller
         return response()->json($car);
     }
 
-    public function update(Request $request, Car $car): JsonResponse
+    public function update(UpdateCarRequest $request, Car $car): JsonResponse
     {
-        $car->update($request->validate([
-            'type' => 'required|in:coupe,limousine,SUV',
-            'brand' => 'required|in:Volkswagon,Skoda',
-            'year' => 'required|integer|min:2000|max:' . date('Y'),
-            'price' => 'required|numeric',
-            'status' => 'required|in:returned,in use,reserved',
-            'description' => 'required|string|min:50|max:250',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]));
-
         $imageName = $this->storeImage($request);
         $car->update(['image' => 'images/'.$imageName]);
-
-        return response()->json($car);
-    }
-
-    public function updateStatus(Request $request, Car $car): JsonResponse
-    {
-        $car->update($request->validate([
-            'status' => 'required|in:returned,in use,reserved'
-        ]));
 
         return response()->json($car);
     }
