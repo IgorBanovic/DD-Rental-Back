@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Review\StoreReviewRequest;
+use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,14 +15,9 @@ class ReviewController extends Controller
         return response()->json(Review::all());
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreReviewRequest $request): JsonResponse
     {
-        $review = new Review($request->validate([
-            'rate' => 'required|integer|min:1|max:10',
-            'comment' => 'required|string|max:255',
-            'car_id' => 'required|exists:cars,id',
-            'user_id' => 'required|exists:users,id'
-        ]));
+        $review = $request;
         $review->save();
         return response()->json($review, 201);
     }
@@ -30,15 +27,11 @@ class ReviewController extends Controller
         return response()->json($review);
     }
 
-    public function update(Request $request, Review $review): JsonResponse
+    public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
-        $review->update($request->validate([
-            'rate' => 'required|integer|min:1|max:10',
-            'comment' => 'required|string|max:255',
-            'car_id' => 'required|exists:cars,id',
-            'user_id' => 'required|exists:users,id'
-        ]));
-
+        $null;
+        $review = $request;
+        $review->save();
         return response()->json($review);
     }
 
