@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
     //
-    public function index(): Collection
+    public function index(): JsonResponse
     {
-        return Review::all();
+        return response()->json(Review::all());
     }
 
     public function store(Request $request): JsonResponse
@@ -36,10 +35,10 @@ class ReviewController extends Controller
     public function update(Request $request, Review $review): JsonResponse
     {
         $review->update($request->validate([
-            'rate' => 'sometimes|integer|min:1|max:10',
-            'comment' => 'sometimes|string|max:255',
-            'car_id' => 'sometimes|exists:cars,id',
-            'user_id' => 'sometimes|exists:users,id'
+            'rate' => 'required|integer|min:1|max:10',
+            'comment' => 'required|string|max:255',
+            'car_id' => 'required|exists:cars,id',
+            'user_id' => 'required|exists:users,id'
         ]));
 
         return response()->json($review);
@@ -48,6 +47,6 @@ class ReviewController extends Controller
     public function destroy(Review $review): JsonResponse
     {
         $review->delete();
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Review deleted successfully'], 204);
     }
 }

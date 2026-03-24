@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('brand');
             $table->string('year');
             $table->decimal('price', 10);
-            $table->boolean('status');
+            $table->string('status');
             $table->text('description');
             $table->string('image')->nullable();
             $table->timestamps();
