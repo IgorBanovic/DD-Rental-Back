@@ -5,6 +5,16 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $id
+ * @property mixed $type
+ * @property mixed $brand
+ * @property mixed $year
+ * @property mixed $price
+ * @property mixed $status
+ * @property mixed $description
+ * @property mixed $image
+ */
 class CarResource extends JsonResource
 {
     /**
@@ -15,6 +25,7 @@ class CarResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'type' => $this->type,
             'brand' => $this->brand,
             'year' => $this->year,
