@@ -1,0 +1,218 @@
+[33mcommit 5b4877e64bc3a7e2362e106a0ff73589529791bd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32medvin[m[33m, [m[1;31morigin/edvin[m[33m)[m
+Author: Edvin <edwwinthr@gmail.com>
+Date:   Tue Mar 24 15:25:21 2026 +0100
+
+    dodat request za review 2
+
+[33mcommit 1f2c5dda2a4e3c2d007b7b3dc943562de2352a24[m
+Author: Edvin <edwwinthr@gmail.com>
+Date:   Tue Mar 24 15:23:44 2026 +0100
+
+    dodat request za review
+
+[33mcommit f4225b016745759a2bd9ef034395fb7402e8d5e1[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: a378c68 417ec60
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Tue Mar 24 15:09:38 2026 +0100
+
+    Merge pull request #13 from IgorBanovic/Igor
+    
+    Requests for cars i reservations, routes edited into resource
+
+[33mcommit 417ec60d6d46d03617e6b827afda326845ffb809[m[33m ([m[1;31morigin/Igor[m[33m)[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Tue Mar 24 15:09:11 2026 +0100
+
+    Requests for cars i reservations, routes edited into resource
+
+[33mcommit a378c68e9ba1671bcd174010f6b524443c528087[m
+Merge: 2b1531f 9fdacb6
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Tue Mar 24 10:01:58 2026 +0100
+
+    Merge pull request #12 from IgorBanovic/Igor
+    
+    a few small changes
+
+[33mcommit 9fdacb685d1b39a90d3d39e5c1537df3de5f0468[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Tue Mar 24 10:01:05 2026 +0100
+
+    a few small changes
+
+[33mcommit 2b1531f8730a5c74ec810f6b3999568c9db51008[m
+Merge: e16abbd caa09ea
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Tue Mar 24 09:41:22 2026 +0100
+
+    Merge pull request #11 from IgorBanovic/Igor
+    
+    jkjad
+
+[33mcommit caa09ea8229b541ac73aabbc597d56e786150a7d[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Tue Mar 24 09:39:10 2026 +0100
+
+    jkjad
+
+[33mcommit e16abbd36b0eb8fbd72ce2f2399140c29f7d46db[m
+Merge: 7ab6c50 c336edb
+Author: edwwinthr-del <edwwinthr@gmail.com>
+Date:   Tue Mar 24 09:28:13 2026 +0100
+
+    Merge pull request #10 from IgorBanovic/edvin
+    
+    update
+
+[33mcommit c336edb7357ef0397285e6df21e319e5afc250e1[m
+Author: Edvin <edwwinthr@gmail.com>
+Date:   Tue Mar 24 09:26:17 2026 +0100
+
+    update
+
+[33mcommit 7ab6c501d36885d8d40c3551a23ae12c27002e91[m
+Merge: 4550199 7bb5ecb
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Tue Mar 24 09:15:43 2026 +0100
+
+    Merge pull request #9 from IgorBanovic/Igor
+    
+    Zavrseni svi api endpointovi i testirano
+
+[33mcommit 7bb5ecbb905547c81c9dd9a706537a499bd09343[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Tue Mar 24 09:14:23 2026 +0100
+
+    Zavrseni svi api endpointovi i testirano
+
+[33mcommit 4550199f230086a3e3d5f4edf090b60c99dd1942[m[33m ([m[1;32mmain[m[33m)[m
+Merge: 65a5c22 e8a597b
+Author: edwwinthr-del <edwwinthr@gmail.com>
+Date:   Mon Mar 23 13:21:10 2026 +0100
+
+    Merge pull request #8 from IgorBanovic/edvin
+    
+    login,register,validation
+
+[33mcommit e8a597b2a47b1f7f0728815cbf38fc03f19d3be3[m
+Author: Edvin <edwwinthr@gmail.com>
+Date:   Mon Mar 23 13:20:41 2026 +0100
+
+    login,register,validation
+
+[33mcommit 65a5c22abe248024f1c5f0815a6804d315c030b0[m
+Merge: 5c7f8cd 6a9c2d7
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Mon Mar 23 13:17:49 2026 +0100
+
+    Merge pull request #7 from IgorBanovic/Igor
+    
+    skladistenje slika
+
+[33mcommit 6a9c2d7d6665a45820c0d5e49dc5323f9506ec13[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Mon Mar 23 13:17:10 2026 +0100
+
+    skladistenje slika
+
+[33mcommit 5c7f8cdb274cbcc434cd227129a1f6bdf9d1bb64[m
+Merge: 7bf5eb9 fb42007
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Mon Mar 23 08:49:11 2026 +0100
+
+    Merge pull request #6 from IgorBanovic/Igor
+    
+    dodat api.php i izmjene
+
+[33mcommit fb42007b8c0208857db5a965cefb37da0b62c188[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Mon Mar 23 08:47:37 2026 +0100
+
+    dodat api.php i izmjene
+
+[33mcommit 7bf5eb972359e9564daabda7fde9d53c2d76380f[m
+Merge: 7712455 19c8c1a
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Fri Mar 20 08:30:47 2026 +0100
+
+    Merge pull request #5 from IgorBanovic/Igor
+    
+    Odradjeni endpointovi za rezervacije i ocjene
+
+[33mcommit 19c8c1a6e7e51279f5ffd1c1607db6aa5c7e8dd7[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Fri Mar 20 08:11:05 2026 +0100
+
+    Odradjeni endpointovi za rezervacije i ocjene
+
+[33mcommit 7712455624d3b76d9ce5f371131e67e475369305[m
+Merge: c24a93b 81c3f17
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Thu Mar 19 15:28:05 2026 +0100
+
+    Merge pull request #4 from IgorBanovic/Igor
+    
+    Igor
+
+[33mcommit 81c3f1700de0aba9b8ad69954a8954651721824c[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Thu Mar 19 15:27:16 2026 +0100
+
+    Odradjeni apiendpointovi za vozila
+
+[33mcommit 2566c025e01e35d102aff13d2253129b7fd0765f[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Thu Mar 19 12:37:56 2026 +0100
+
+    Odradjena migracija za rezervacije
+
+[33mcommit c24a93badd4d72b66d8f9501e884d60b647f97fb[m
+Merge: 4612835 85be83a
+Author: edwwinthr-del <edwwinthr@gmail.com>
+Date:   Thu Mar 19 10:50:01 2026 +0100
+
+    Merge pull request #3 from IgorBanovic/edvin
+    
+    migracije za vozila
+
+[33mcommit 85be83a3b4d04e80eddc62955e079ef95cadaca0[m
+Author: Edvin <edwwinthr@gmail.com>
+Date:   Thu Mar 19 10:48:39 2026 +0100
+
+    migracije za vozila
+
+[33mcommit 461283504638703c27748a973075731584e1182e[m
+Merge: 1c3323e a9d29bb
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Thu Mar 19 09:33:00 2026 +0100
+
+    Merge pull request #2 from IgorBanovic/Igor
+    
+    Odradjeni useri
+
+[33mcommit a9d29bb68ef0d8bc211af9b908f051b471273124[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Thu Mar 19 09:30:02 2026 +0100
+
+    Odradjeni useri
+
+[33mcommit 1c3323e7b06685e16481f0ab175ae74ceca98c8b[m
+Merge: 36ddc87 8b4e113
+Author: Igor Banovic <136337613+IgorBanovic@users.noreply.github.com>
+Date:   Thu Mar 19 09:23:52 2026 +0100
+
+    Merge pull request #1 from IgorBanovic/Igor
+    
+    Odradjeni useri
+
+[33mcommit 8b4e1138fe0aaf815d4265480c9ca2094b3df86d[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Thu Mar 19 08:33:40 2026 +0100
+
+    Odradjeni useri
+
+[33mcommit 36ddc87ba701ae2237c5eb82a51319c2f34994cf[m
+Author: Igor Banovic <ibanovic07@gmail.com>
+Date:   Wed Mar 18 09:34:46 2026 +0100
+
+    Initial Laravel project
