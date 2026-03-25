@@ -4,20 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Car\StoreCarRequest;
 use App\Http\Requests\Car\UpdateCarRequest;
+use App\Http\Requests\DateRequest;
+use App\Http\Resources\CarCollection;
+use App\Http\Resources\CarResource;
 use App\Models\Car;
-use App\Rules\MoreThan24H;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    public function index(): JsonResponse
+    public function index()
     {
-        return response()->json(Car::all());
+        return new CarCollection(Car::all());
     }
 
-    public function store(StoreCarRequest $request): JsonResponse
+    public function store(StoreCarRequest $request)
     {
         if(!$request->hasFile('image')){
             $car = new Car($request->all());
@@ -27,7 +29,7 @@ class CarController extends Controller
         }
         $car->save();
 
-        return response()->json($car, 201);
+        return new CarResource($car);
     }
 
     public function createCar(StoreCarRequest $request, string $imageName): Car
@@ -50,17 +52,17 @@ class CarController extends Controller
         return $imageName;
     }
 
-    public function show(Car $car): JsonResponse
+    public function show(Car $car)
     {
-        return response()->json($car);
+        return new CarResource($car);
     }
 
-    public function update(UpdateCarRequest $request, Car $car): JsonResponse
+    public function update(UpdateCarRequest $request, Car $car)
     {
         $imageName = $this->storeImage($request);
         $car->update(['image' => 'images/'.$imageName]);
 
-        return response()->json($car);
+        return new CarResource($car);
     }
 
     public function destroy(Car $car): JsonResponse
@@ -74,12 +76,8 @@ class CarController extends Controller
         return response()->json($car->reviews);
     }
 
-    public function availableCarsForDates(Request $request): JsonResponse
+    public function availableCarsForDates(DateRequest $request)
     {
-        $request->validate([
-            'start' => ['required', 'date', new MoreThan24H()],
-            'end' => 'required|date|after:start',
-        ]);
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
         $cars = Car::all();
@@ -95,6 +93,6 @@ class CarController extends Controller
             }
                 $filteredCars[] = $car->withoutRelations();
         }
-        return response()->json($filteredCars);
+        return new CarCollection($filteredCars);
     }
 }

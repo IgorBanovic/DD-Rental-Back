@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Reservation\StoreReservationRequest;
 use App\Http\Requests\Reservation\UpdateReservationRequest;
+use App\Http\Resources\ReservationCollection;
+use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class ReservationController extends Controller
 {
-    public function index(): JsonResponse
+    public function index()
     {
-        return response()->json(Reservation::all());
+        return new ReservationCollection(Reservation::all());
     }
 
-    public function store(StoreReservationRequest $request): JsonResponse
+    public function store(StoreReservationRequest $request)
     {
         $reservation = new Reservation();
         $reservation->start_date = $request->start_date;
@@ -24,7 +26,7 @@ class ReservationController extends Controller
         $reservation->car_id = $request->car_id;
         $reservation->price = $this->calculatePrice($reservation);
         $reservation->save();
-        return response()->json($reservation->withoutRelations(), 201);
+        return new ReservationResource($reservation);
     }
 
     public function calculatePrice(Reservation $reservation): float
@@ -34,12 +36,12 @@ class ReservationController extends Controller
         return $days * $reservation->car->price;
     }
 
-    public function show(Reservation $reservation): JsonResponse
+    public function show(Reservation $reservation)
     {
-        return response()->json($reservation);
+        return new ReservationResource($reservation);
     }
 
-    public function update(UpdateReservationRequest $request, Reservation $reservation): JsonResponse
+    public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
         $reservation->start_date = $request->start_date;
         $reservation->end_date = $request->end_date;
@@ -47,7 +49,7 @@ class ReservationController extends Controller
         $reservation->car_id = $request->car_id;
         $reservation->price = $this->calculatePrice($reservation);
         $reservation->save();
-        return response()->json($reservation->withoutRelations());
+        return new ReservationResource($reservation);
     }
 
     public function destroy(Reservation $reservation): JsonResponse
