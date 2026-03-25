@@ -7,59 +7,41 @@ use App\Http\Requests\Reservation\UpdateReservationRequest;
 use App\Http\Resources\ReservationCollection;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
+use App\Http\Services\ReservationService;
+use Exception;
 
 class ReservationController extends Controller
 {
-    public function index()
+    public function index(ReservationService $reservationService)
     {
-        return new ReservationCollection(Reservation::all());
+        return new ReservationCollection($reservationService->index());
     }
 
-    public function store(StoreReservationRequest $request)
+    public function store(StoreReservationRequest $request, ReservationService $reservationService)
     {
-        $reservation = new Reservation();
-        $reservation->start_date = $request->start_date;
-        $reservation->end_date = $request->end_date;
-        $reservation->user_id = $request->user_id;
-        $reservation->car_id = $request->car_id;
-        $reservation->price = $this->calculatePrice($reservation);
-        $reservation->save();
+        $reservation = $reservationService->store($request);
         return new ReservationResource($reservation);
     }
 
-    public function calculatePrice(Reservation $reservation): float
+    public function show(Reservation $reservation, ReservationService $reservationService)
     {
-        $days = ceil(Carbon::parse($reservation->start_date)
-            ->diffInDays(Carbon::parse($reservation->end_date)));
-        return $days * $reservation->car->price;
-    }
-
-    public function show(Reservation $reservation)
-    {
+        $reservation = $reservationService->show($reservation);
         return new ReservationResource($reservation);
     }
 
-    public function update(UpdateReservationRequest $request, Reservation $reservation)
+    public function update(UpdateReservationRequest $request, Reservation $reservation, ReservationService $reservationService)
     {
-        $reservation->start_date = $request->start_date;
-        $reservation->end_date = $request->end_date;
-        $reservation->user_id = $request->user_id;
-        $reservation->car_id = $request->car_id;
-        $reservation->price = $this->calculatePrice($reservation);
-        $reservation->save();
+        $reservation = $reservationService->update($request, $reservation);
         return new ReservationResource($reservation);
     }
 
-    public function destroy(Reservation $reservation): JsonResponse
+    public function destroy(Reservation $reservation, ReservationService $reservationService)
     {
-        if($reservation->start_date >= now()->addHours(48)) {
-            $reservation->delete();
-            return response()->json(['message' => 'Reservation canceled'], 204);
-        }
-        else{
-            return response()->json('Reservations can be cancelled only 48 hours prior start without charge' , 422);
+        try{
+            $reservationService->destroy($reservation);
+            return response()->json(['message' => 'Reservation has been cancelled successfully'], 204);
+        }catch (Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 }
