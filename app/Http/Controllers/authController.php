@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\AuthLoginRegister\RegisterRequest;
+use App\Http\Requests\AuthLoginRegister\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,31 +14,13 @@ class authController extends Controller
 {
     /**
      * Create User
-     * @param Request $request
+     * @param RegisterRequest $request
      * @return JsonResponse
      */
-    public function createUser(Request $request): JsonResponse
+
+    public function createUser(RegisterRequest $request): JsonResponse
     {
         try {
-            //Validated
-            $validateUser = Validator::make($request->all(),
-                [
-                    'name' => 'required|string|max:25',
-                    'email' => 'required|email|unique:users,email|max:50',
-                    'password' =>
-                        'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
-                         min:8|
-                        confirmed'
-                ]);
-
-            if ($validateUser->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
-
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -61,26 +44,12 @@ class authController extends Controller
 
     /**
      * Login The User
-     * @param Request $request
+     * @param LoginRequest $request
      * @return JsonResponse
      */
-    public function loginUser(Request $request): JsonResponse
+    public function loginUser(LoginRequest $request): JsonResponse
     {
         try {
-            $validateUser = Validator::make($request->all(),
-                [
-                    'email' => 'required|email',
-                    'password' => 'required'
-                ]);
-
-            if ($validateUser->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
-            }
-
             if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
