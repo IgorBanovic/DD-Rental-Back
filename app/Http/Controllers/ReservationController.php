@@ -40,7 +40,7 @@ class ReservationController extends Controller
             $reservationService->destroy($reservation);
             return response()->json(['message' => 'Reservation has been cancelled successfully'], 204);
         }catch (Exception $e){
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         }
     }
 }

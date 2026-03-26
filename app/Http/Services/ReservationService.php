@@ -46,7 +46,7 @@ class ReservationService
             $reservation->delete();
         }
         else{
-            throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 400);
+            throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 403);
         }
     }
 }
