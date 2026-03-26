@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Models\Car;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class CarService
 {
@@ -25,8 +26,9 @@ class CarService
 
     public function update(array $data, Car $car): Car
     {
-        $car->update($data);
+        $car->update(collect($data)->except('image')->toArray());
         $path = $data['image']->store('images', 'public');
+        Storage::disk('public')->delete($car->image);
 
         $car->image = $path;
         $car->save();

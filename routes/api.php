@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::resource('/reservations', ReservationController::class);
-    Route::resource('/reviews', ReviewController::class);
-    Route::resource('/users', UserController::class);
+    Route::apiResource('/reservations', ReservationController::class);
+    Route::apiResource('/reviews', ReviewController::class);
+    Route::apiResource('/users', UserController::class);
 });
 
-Route::resource('/cars', CarController::class);
+Route::apiResource('/cars', CarController::class);
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);

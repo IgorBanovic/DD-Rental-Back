@@ -35,6 +35,6 @@ class CarController extends Controller
     public function destroy(CarService $carService, Car $car)
     {
             $carService->destroy($car);
-            return response()->json(['message' => 'Car has been deleted successfully'], 204);
+            return response()->json(['message' => 'Car has been deleted successfully']);
     }
 }
