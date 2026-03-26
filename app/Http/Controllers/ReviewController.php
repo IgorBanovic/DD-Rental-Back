@@ -16,18 +16,20 @@ class ReviewController extends Controller
     {
         return new ReviewCollection(Review::all());
     }
+
     public function store(StoreReviewRequest $request, ReviewService $reviewService)
     {
-        $review = $reviewService->store((array)$request);
+        $review = $reviewService->store($request->all());
         return new ReviewResource($review);
     }
+
     public function show(Review $review)
     {
         return new ReviewResource($review);
     }
     public function update(Review $review, UpdateReviewRequest $request, ReviewService $reviewService)
     {
-        $review = $reviewService->update((array)$request, $review);
+        $review = $reviewService->update($request->all(), $review);
         return new ReviewResource($review);
     }
     public function destroy(Review $review, ReviewService $reviewService)
