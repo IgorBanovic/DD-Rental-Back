@@ -11,7 +11,7 @@ class CarService
 {
     public function index(): Collection
     {
-        return Car::where('status', '===',  'returned')->get();
+        return Car::all();
     }
 
     public function store(array $data): Car

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarController as CarAdminController;
+use App\Http\Controllers\Car\CarController as CarController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
@@ -13,7 +14,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/reviews', ReviewController::class);
     Route::apiResource('/users', UserController::class);
 });
+//for everyone
+Route::get('/cars/{dates}/availableCars', [CarController::class, 'index']);
 
-Route::apiResource('/cars', CarController::class);
+//for admin
+Route::apiResource('/cars', CarAdminController::class);
+
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
