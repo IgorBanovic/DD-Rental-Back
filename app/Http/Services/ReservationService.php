@@ -2,20 +2,13 @@
 
 namespace App\Http\Services;
 
-use App\Http\Requests\Reservation\UpdateReservationRequest;
 use App\Models\Reservation;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Collection;
 
 class ReservationService
 {
-    public function index(): Collection
-    {
-        return Reservation::all();
-    }
-
     public function store(array $data): Reservation
     {
         $reservation = new Reservation($data);
@@ -29,11 +22,6 @@ class ReservationService
         $days = ceil(Carbon::parse($reservation->start_date)
             ->diffInDays(Carbon::parse($reservation->end_date)));
         return $days * $reservation->car->price;
-    }
-
-    public function show(Reservation $reservation): Reservation
-    {
-        return $reservation;
     }
 
     public function update(array $data, Reservation $reservation): Reservation
@@ -53,7 +41,7 @@ class ReservationService
             $reservation->delete();
         }
         else{
-            throw new Exception('The reservation can not be cancelled in less than 48 hours prior start', 400);
+            throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 400);
         }
     }
 }

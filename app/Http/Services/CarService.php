@@ -10,7 +10,7 @@ class CarService
 {
     public function index(): Collection
     {
-        return Car::all();
+        return Car::all()->where('status', 'returned');
     }
 
     public function store(array $data): Car
@@ -25,11 +25,6 @@ class CarService
         }
 
         $car->save();
-        return $car;
-    }
-
-    public function show(Car $car): Car
-    {
         return $car;
     }
 
