@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('price', 10);
             $table->string('status');
             $table->text('description');
-            $table->string('image')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }
