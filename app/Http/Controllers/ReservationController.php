@@ -12,14 +12,14 @@ use Exception;
 
 class ReservationController extends Controller
 {
-    public function index()
+    public function index(ReservationService $reservationService)
     {
-        return new ReservationCollection(Reservation::all());
+        return new ReservationCollection($reservationService->index());
     }
 
     public function store(StoreReservationRequest $request, ReservationService $reservationService)
     {
-        $reservation = $reservationService->store($request);
+        $reservation = $reservationService->store((array)$request);
         return new ReservationResource($reservation);
     }
 
@@ -30,7 +30,7 @@ class ReservationController extends Controller
 
     public function update(UpdateReservationRequest $request, Reservation $reservation, ReservationService $reservationService)
     {
-        $reservation = $reservationService->update($request, $reservation);
+        $reservation = $reservationService->update((array)$request, $reservation);
         return new ReservationResource($reservation);
     }
 

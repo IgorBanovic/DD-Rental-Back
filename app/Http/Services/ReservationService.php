@@ -9,6 +9,11 @@ use Illuminate\Support\Collection;
 
 class ReservationService
 {
+    public function index(): Collection
+    {
+        return Reservation::where('start_date', '>=', now())->get();
+    }
+
     public function store(array $data): Reservation
     {
         $reservation = new Reservation($data);

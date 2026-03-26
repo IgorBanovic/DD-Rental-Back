@@ -10,20 +10,15 @@ class CarService
 {
     public function index(): Collection
     {
-        return Car::all()->where('status', 'returned');
+        return Car::where('status', '===',  'returned')->get();
     }
 
     public function store(array $data): Car
     {
-        //popraviti logiku za skladistenje slika
         $car = new Car($data);
+        $path = $data['image']->store('images', 'public');
 
-        if(isset($data['image'])){
-            $imageName = time().'.'.$data['image']->extension();
-            $data['image']->move(public_path('images'), $imageName);
-            $car->image = 'images/'.$imageName;
-        }
-
+        $car->image = $path;
         $car->save();
         return $car;
     }
@@ -31,14 +26,10 @@ class CarService
     public function update(array $data, Car $car): Car
     {
         $car->update($data);
+        $path = $data['image']->store('images', 'public');
 
-        if (isset($data['image'])) {
-            $imageName = time().'.'.$data['image']->extension();
-            $data['image']->move(public_path('images'), $imageName);
-            $car->image = 'images/'.$imageName;
-            $car->save();
-        }
-
+        $car->image = $path;
+        $car->save();
         return $car;
     }
 
