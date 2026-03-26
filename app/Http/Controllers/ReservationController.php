@@ -19,7 +19,7 @@ class ReservationController extends Controller
 
     public function store(StoreReservationRequest $request, ReservationService $reservationService)
     {
-        $reservation = $reservationService->store((array)$request);
+        $reservation = $reservationService->store($request->all());
         return new ReservationResource($reservation);
     }
 
@@ -30,7 +30,7 @@ class ReservationController extends Controller
 
     public function update(UpdateReservationRequest $request, Reservation $reservation, ReservationService $reservationService)
     {
-        $reservation = $reservationService->update((array)$request, $reservation);
+        $reservation = $reservationService->update($request->all(), $reservation);
         return new ReservationResource($reservation);
     }
 

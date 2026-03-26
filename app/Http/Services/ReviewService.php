@@ -2,12 +2,7 @@
 
 namespace App\Http\Services;
 
-use App\Http\Requests\Review\StoreReviewRequest;
-use App\Http\Requests\Review\UpdateReviewRequest;
-use App\Http\Resources\ReviewCollection;
-use App\Http\Resources\ReviewResource;
 use App\Models\Review;
-use Illuminate\Http\JsonResponse;
 
 class ReviewService
 {
@@ -18,7 +13,7 @@ class ReviewService
         return $review;
     }
 
-    public function update(array $data, Review $review)
+    public function update(array $data, Review $review): Review
     {
         $review->update($data);
         return $review;

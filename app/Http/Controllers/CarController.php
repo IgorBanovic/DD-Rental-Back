@@ -17,7 +17,7 @@ class CarController extends Controller
     }
     public function store(StoreCarRequest $request, CarService $carService)
     {
-        $car = $carService->store((array)$request);
+        $car = $carService->store($request->all());
         return new CarResource($car);
     }
 
@@ -28,7 +28,7 @@ class CarController extends Controller
 
     public function update(UpdateCarRequest $request, CarService $carService, Car $car)
     {
-        $car = $carService->update((array)$request, $car);
+        $car = $carService->update($request->all(), $car);
         return new CarResource($car);
     }
 

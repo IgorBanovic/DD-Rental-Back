@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/{car}/reviews', [ReviewController::class, 'index']);
+
 });
 //for everyone
-Route::get('/cars/{dates}/availableCars', [CarController::class, 'index']);
+Route::get('/{dates}/availableCars', [CarController::class, 'index']);
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
+Route::get('{car}/reviews', [ReviewController::class, 'index']);
 
 //for admin
 Route::apiResource('/cars', CarAdminController::class);
