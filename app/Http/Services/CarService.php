@@ -35,16 +35,6 @@ class CarService
         return $car;
     }
 
-    public function destroy(Car $car): void
-    {
-        $car->delete();
-    }
-
-    public function getReviews(Car $car)
-    {
-        return $car->reviews;
-    }
-
     public function availableCarsForDates(array $data): array
     {
         $start = Carbon::parse($data['start']);

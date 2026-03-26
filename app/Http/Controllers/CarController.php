@@ -32,9 +32,9 @@ class CarController extends Controller
         return new CarResource($car);
     }
 
-    public function destroy(CarService $carService, Car $car)
+    public function destroy(Car $car)
     {
-            $carService->destroy($car);
+            $car->delete();
             return response()->json(['message' => 'Car has been deleted successfully']);
     }
 }
