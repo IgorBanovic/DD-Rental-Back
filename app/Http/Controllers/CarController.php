@@ -21,9 +21,9 @@ class CarController extends Controller
         return new CarResource($car);
     }
 
-    public function show(CarService $carService, Car $car)
+    public function show(Car $car)
     {
-        return new CarResource($carService->show($car));
+        return new CarResource($car);
     }
 
     public function update(UpdateCarRequest $request, CarService $carService, Car $car)
