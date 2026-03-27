@@ -25,6 +25,7 @@ class ReservationController extends Controller
 
     public function show(Reservation $reservation)
     {
+        $this->authorize('view', $reservation);
         return new ReservationResource($reservation);
     }
 
@@ -40,6 +41,7 @@ class ReservationController extends Controller
 
     public function destroy(Reservation $reservation, ReservationService $reservationService)
     {
+        $this->authorize('delete', $reservation);
         try{
             $reservationService->destroy($reservation);
             return response()->json(['message' => 'Reservation has been cancelled successfully'], 204);

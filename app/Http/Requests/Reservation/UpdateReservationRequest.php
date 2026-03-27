@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Reservation;
 
+use App\Models\Reservation;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +13,8 @@ class UpdateReservationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $reservation = $this->route('reservation');
+        return $this->user()->can('update', $reservation);
     }
 
     /**

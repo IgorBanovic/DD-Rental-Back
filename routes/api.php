@@ -14,6 +14,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/users/{user}/reservations', [UserReservationsController::class, 'index']);
     Route::apiResource('/reservations', ReservationController::class)->except('index');
+    Route::apiResource('/reviews', ReviewController::class);
 });
 //for everyone
 Route::get('/cars/available', [CarController::class, 'index']);
