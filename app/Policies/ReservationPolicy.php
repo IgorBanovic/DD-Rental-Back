@@ -12,6 +12,8 @@ class ReservationPolicy
      */
     public function view(User $user, Reservation $reservation): bool
     {
+        if($user->is_admin)
+            return true;
         return $user->id === $reservation->user_id;
     }
 
@@ -20,6 +22,8 @@ class ReservationPolicy
      */
     public function update(User $user, Reservation $reservation): bool
     {
+        if($user->is_admin)
+            return true;
         return $user->id === $reservation->user_id;
     }
 
@@ -28,6 +32,8 @@ class ReservationPolicy
      */
     public function delete(User $user, Reservation $reservation): bool
     {
+        if($user->is_admin)
+            return true;
         return $user->id === $reservation->user_id;
     }
 }
