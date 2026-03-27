@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CarService
 {
-    public function index(): Collection
-    {
-        return Car::all();
-    }
-
     public function store(array $data): Car
     {
         $car = new Car($data);

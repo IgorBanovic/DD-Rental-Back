@@ -11,10 +11,11 @@ use App\Http\Resources\CarCollection;
 
 class CarController extends Controller
 {
-    public function index(CarService $carService)
+    public function index()
     {
-        return new CarCollection($carService->index());
+        return new CarCollection(Car::all());
     }
+
     public function store(StoreCarRequest $request, CarService $carService)
     {
         $car = $carService->store($request->all());
