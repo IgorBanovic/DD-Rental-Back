@@ -39,8 +39,9 @@ class CarService
 
         foreach ($cars as $car) {
             foreach ($car->reservations as $reservation) {
-                if(($start->between($reservation->start_date, $reservation->end_date)) ||
-                    ($end->between($reservation->start_date, $reservation->end_date)))
+                if($start->between($reservation->start_date, $reservation->end_date) ||
+                    $end->between($reservation->start_date, $reservation->end_date) ||
+                    ($start <= $reservation->start_date && $end >= $reservation->end_date))
                 {
                     continue 2;
                 }
