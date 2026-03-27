@@ -13,21 +13,6 @@ class UserController extends Controller
         return response()->json(User::all());
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        $user = new User($request->validate([
-            'name' => 'required|string|max:25',
-            'email' => 'required|string|email|unique:users|max:50',
-            'password' =>
-                'required|
-                regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/|
-                min:8|
-                confirmed'
-        ]));
-        $user->save();
-        return response()->json($user, 201);
-    }
-
     public function show(User $user): JsonResponse
     {
         return response()->json($user);
@@ -50,10 +35,5 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(['message' => 'User deleted successfully'], 204);
-    }
-
-    public function getReservations(User $user): JsonResponse
-    {
-        return response()->json($user->reservations);
     }
 }

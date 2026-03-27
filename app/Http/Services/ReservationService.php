@@ -29,12 +29,19 @@ class ReservationService
         return $days * $reservation->car->price;
     }
 
+    /**
+     * @throws Exception
+     */
     public function update(array $data, Reservation $reservation): Reservation
     {
-        $reservation->update($data);
-        $reservation->price = $this->calculatePrice($reservation);
-        $reservation->save();
-        return $reservation;
+        if($reservation->start_date > now()){
+            $reservation->update($data);
+            $reservation->price = $this->calculatePrice($reservation);
+            $reservation->save();
+            return $reservation;
+        }else{
+            throw new Exception("The reservation cannot be updated after it's already started", 403);
+        }
     }
 
     /**
@@ -44,8 +51,7 @@ class ReservationService
     {
         if($reservation->start_date >= now()->addHours(48)) {
             $reservation->delete();
-        }
-        else{
+        } else{
             throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 403);
         }
     }
