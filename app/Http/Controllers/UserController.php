@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Services\UserService;
 use App\Models\User;
@@ -22,10 +23,10 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(User $user, UserService $userService)
+    public function update(User $user, UpdateUserRequest $request, UserService $userService)
     {
      try{
-             $userService->update($user);
+             $user = $userService->update($request->validated(), $user);
              return new UserResource($user);
         }  catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], $e->getCode());
