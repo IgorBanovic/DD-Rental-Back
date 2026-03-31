@@ -3,24 +3,40 @@
 namespace App\Http\Services;
 
 use App\Models\Review;
+use Exception;
 
 class ReviewService
 {
+    /**
+     * @throws Exception
+     */
     public function store(array $data): Review
     {
         $review = new Review($data);
-        $review->save();
+        if(!$review->save()){
+            throw new Exception("Error saving review", 500);
+        }
         return $review;
     }
 
+    /**
+     * @throws Exception
+     */
     public function update(array $data, Review $review): Review
     {
-        $review->update($data);
+        if(!$review->update($data)){
+            throw new Exception('Error updating review', 500);
+        }
         return $review;
     }
 
+    /**
+     * @throws Exception
+     */
     public function destroy(Review $review): void
     {
-        $review->delete();
+        if(!$review->delete()){
+            throw new Exception('Error deleting review', 500);
+        }
     }
 }

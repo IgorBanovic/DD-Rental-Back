@@ -12,8 +12,12 @@ class ReviewController extends Controller
 {
     public function store(StoreReviewRequest $request, ReviewService $reviewService)
     {
-        $review = $reviewService->store($request->all());
-        return new ReviewResource($review);
+        try {
+            $review = $reviewService->store($request->validated());
+            return new ReviewResource($review);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
     }
 
     public function show(Review $review)
@@ -22,14 +26,22 @@ class ReviewController extends Controller
     }
     public function update(Review $review, UpdateReviewRequest $request, ReviewService $reviewService)
     {
-        $review = $reviewService->update($request->all(), $review);
-        return new ReviewResource($review);
+        try {
+            $review = $reviewService->update($request->validated(), $review);
+            return new ReviewResource($review);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
     }
     public function destroy(Review $review, ReviewService $reviewService)
     {
         $this->authorize('delete', $review);
-        $reviewService->destroy($review);
-        return response()->json('Review successfully deleted');
+       try {
+            $reviewService->destroy($review);
+            return response()->json('Review successfully deleted');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
     }
 
 }

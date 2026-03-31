@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Reservation;
 
-use App\Models\Reservation;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
