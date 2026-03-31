@@ -2,20 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
+use App\Http\Services\UserService;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Exception;
+use App\Http\Resources\UserCollection;
 
 class UserController extends Controller
 {
-    public function show(User $user): JsonResponse
+
+    public function index()
     {
-        return response()->json($user);
+        return new UserCollection(User::all());
     }
 
-    public function destroy(User $user): JsonResponse
+    public function show(User $user)
     {
-        $user->delete();
-        return response()->json(['message' => 'User deleted successfully'], 204);
+        return new UserResource($user);
     }
+
+    public function update(User $user, UserService $userService)
+    {
+     try{
+             $userService->update($user);
+             return new UserResource($user);
+        }  catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+     }
+    }
+
+    public function destroy(User $user, UserService $userService): JsonResponse
+    {
+        try {
+            $userService->destroy($user);
+            return response()->json('User successfully deleted');
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
+    }
+
 }

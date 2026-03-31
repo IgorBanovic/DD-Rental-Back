@@ -7,12 +7,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property mixed $id
- * @property mixed $rate
- * @property mixed $comment
- * @property mixed $user_id
- * @property mixed $car_id
+ * @property mixed $name
+ * @property mixed $email
  */
-class ReviewResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,10 +21,9 @@ class ReviewResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'rate' => $this->rate,
-            'email' => $this->comment,
-            'user_id' => $this->user_id,
-            'car_id' => $this->car_id
+            'name' => $this->name,
+            'email' => $this->email
+
         ];
     }
 }
