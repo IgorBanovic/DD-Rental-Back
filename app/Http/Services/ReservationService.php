@@ -34,14 +34,13 @@ class ReservationService
      */
     public function update(array $data, Reservation $reservation): Reservation
     {
-        if($reservation->start_date > now()){
-            $reservation->update($data);
-            $reservation->price = $this->calculatePrice($reservation);
-            $reservation->save();
-            return $reservation;
-        }else{
+        if(!$reservation->start_date > now()) {
             throw new Exception("The reservation cannot be updated after it's already started", 403);
         }
+        $reservation->update($data);
+        $reservation->price = $this->calculatePrice($reservation);
+        $reservation->save();
+        return $reservation;
     }
 
     /**
@@ -49,10 +48,9 @@ class ReservationService
      */
     public function destroy(Reservation $reservation): void
     {
-        if($reservation->start_date >= now()->addHours(48)) {
-            $reservation->delete();
-        } else{
+        if($reservation->start_date < now()->addHours(48)) {
             throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 403);
         }
+        $reservation->delete();
     }
 }
