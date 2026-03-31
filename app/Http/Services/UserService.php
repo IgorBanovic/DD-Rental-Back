@@ -10,21 +10,21 @@ class UserService
     /**
      * @throws Exception
      */
-    public function destroy(User $user): Void
+    public function update(array $data, User $user): User
     {
-        if (!$user->delete()) {
-            throw new Exception('Error deleting user', 500);
+        if (!$user->update($data)) {
+            throw new Exception('Error updating user', 500);
         }
+        return $user;
     }
 
     /**
      * @throws Exception
      */
-    public function update(User $user): User
+    public function destroy(User $user): Void
     {
-        if (!$user->update()) {
-            throw new Exception('Error updating user', 500);
+        if (!$user->delete()) {
+            throw new Exception('Error deleting user', 500);
         }
-        return $user;
     }
 }
