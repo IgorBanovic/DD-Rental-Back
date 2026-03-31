@@ -7,6 +7,7 @@ use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Http\Services\ReviewService;
 use App\Models\Review;
+use Exception;
 
 class ReviewController extends Controller
 {
@@ -15,7 +16,7 @@ class ReviewController extends Controller
         try {
             $review = $reviewService->store($request->validated());
             return new ReviewResource($review);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
     }
@@ -29,7 +30,7 @@ class ReviewController extends Controller
         try {
             $review = $reviewService->update($request->validated(), $review);
             return new ReviewResource($review);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
     }
@@ -39,7 +40,7 @@ class ReviewController extends Controller
        try {
             $reviewService->destroy($review);
             return response()->json('Review successfully deleted');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
     }

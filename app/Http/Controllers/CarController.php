@@ -8,6 +8,7 @@ use App\Models\Car;
 use App\Http\Services\CarService;
 use App\Http\Resources\CarResource;
 use App\Http\Resources\CarCollection;
+use Exception;
 
 class CarController extends Controller
 {
@@ -18,8 +19,12 @@ class CarController extends Controller
 
     public function store(StoreCarRequest $request, CarService $carService)
     {
-        $car = $carService->store($request->all());
-        return new CarResource($car);
+        try {
+            $car = $carService->store($request->validated());
+            return new CarResource($car);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
     }
 
     public function show(Car $car)
@@ -29,13 +34,21 @@ class CarController extends Controller
 
     public function update(UpdateCarRequest $request, CarService $carService, Car $car)
     {
-        $car = $carService->update($request->all(), $car);
-        return new CarResource($car);
+        try {
+            $car = $carService->update($request->validated(), $car);
+            return new CarResource($car);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
     }
 
-    public function destroy(Car $car)
+    public function destroy(Car $car, CarService $carService)
     {
-            $car->delete();
-            return response()->json(['message' => 'Car has been deleted successfully']);
+            try{
+                $carService->destroy($car);
+                return response()->json(['message' => 'Car has been deleted successfully']);
+            }catch (Exception $e){
+                return response()->json(['error' => $e->getMessage()], $e->getCode());
+            }
     }
 }
