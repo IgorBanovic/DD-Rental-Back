@@ -12,15 +12,19 @@ use Exception;
 
 class ReservationController extends Controller
 {
-    public function index(ReservationService $reservationService)
+    public function index()
     {
-        return new ReservationCollection($reservationService->index());
+        return new ReservationCollection(Reservation::all());
     }
 
     public function store(StoreReservationRequest $request, ReservationService $reservationService)
     {
-        $reservation = $reservationService->store($request->all());
-        return new ReservationResource($reservation);
+        try {
+            $reservation = $reservationService->store($request->validated());
+            return new ReservationResource($reservation);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        }
     }
 
     public function show(Reservation $reservation)
@@ -32,10 +36,10 @@ class ReservationController extends Controller
     public function update(UpdateReservationRequest $request, Reservation $reservation, ReservationService $reservationService)
     {
         try{
-            $reservation = $reservationService->update($request->all(), $reservation);
+            $reservation = $reservationService->update($request->validated, $reservation);
             return new ReservationResource($reservation);
         }catch(Exception $e){
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
     }
 
@@ -46,7 +50,7 @@ class ReservationController extends Controller
             $reservationService->destroy($reservation);
             return response()->json(['message' => 'Reservation has been cancelled successfully'], 204);
         }catch (Exception $e){
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
     }
 }

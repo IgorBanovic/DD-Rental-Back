@@ -5,20 +5,22 @@ namespace App\Http\Services;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Collection;
 
 class ReservationService
 {
-    public function index(): Collection
-    {
-        return Reservation::where('start_date', '>=', now())->get();
-    }
-
+    /**
+     * @throws Exception
+     */
     public function store(array $data): Reservation
     {
         $reservation = new Reservation($data);
         $reservation->price = $this->calculatePrice($reservation);
-        $reservation->save();
+        if($reservation->price <= 0){
+            throw new Exception('Error calculating price', 500);
+        }
+        if(!$reservation->save()){
+            throw new Exception('Error saving reservation', 500);
+        }
         return $reservation;
     }
 
@@ -37,9 +39,18 @@ class ReservationService
         if(!$reservation->start_date > now()) {
             throw new Exception("The reservation cannot be updated after it's already started", 403);
         }
+        if(!$reservation->update($data))
+        {
+            throw new Exception('Error updating reservation', 500);
+        }
         $reservation->update($data);
         $reservation->price = $this->calculatePrice($reservation);
-        $reservation->save();
+        if($reservation->price <= 0){
+            throw new Exception('Error calculating price', 500);
+        }
+        if(!$reservation->save()){
+            throw new Exception('Error updating reservation', 500);
+        }
         return $reservation;
     }
 
@@ -51,6 +62,8 @@ class ReservationService
         if($reservation->start_date < now()->addHours(48)) {
             throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 403);
         }
-        $reservation->delete();
+        if(!$reservation->delete()){
+            throw new Exception('Error deleting reservation', 500);
+        }
     }
 }

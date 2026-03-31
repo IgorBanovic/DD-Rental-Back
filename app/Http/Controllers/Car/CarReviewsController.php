@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Car;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewCollection;
 use App\Models\Car;
 
-class CarReviewsController
+class CarReviewsController extends Controller
 {
     public function index(Car $car)
     {
