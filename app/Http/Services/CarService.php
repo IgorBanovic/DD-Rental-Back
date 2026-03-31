@@ -5,28 +5,52 @@ namespace App\Http\Services;
 use App\Models\Car;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class CarService
 {
+    /**
+     * @throws Exception
+     */
     public function store(array $data): Car
     {
         $car = new Car($data);
         $path = $data['image']->store('images', 'public');
 
         $car->image = $path;
-        $car->save();
+        if(!$car->save()) {
+            throw new Exception('Error saving car', 500);
+        }
         return $car;
     }
 
+    /**
+     * @throws Exception
+     */
     public function update(array $data, Car $car): Car
     {
-        $car->update(collect($data)->except('image')->toArray());
+        if(!$car->update(collect($data)->except('image')->toArray())){
+            throw new Exception('Error updating car', 500);
+        }
         $path = $data['image']->store('images', 'public');
         Storage::disk('public')->delete($car->image);
 
         $car->image = $path;
-        $car->save();
+        if(!$car->save()){
+            throw new Exception('Error saving car', 500);
+        }
         return $car;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function destroy(Car $car): void
+    {
+        if(!$car->delete()){
+            throw new Exception('Error deleting car', 500);
+        }
+        Storage::disk('public')->delete($car->image);
     }
 
     public function availableCarsForDates(array $data): array

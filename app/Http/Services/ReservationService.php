@@ -36,9 +36,6 @@ class ReservationService
      */
     public function update(array $data, Reservation $reservation): Reservation
     {
-        if(!$reservation->start_date > now()) {
-            throw new Exception("The reservation cannot be updated after it's already started", 403);
-        }
         if(!$reservation->update($data))
         {
             throw new Exception('Error updating reservation', 500);
