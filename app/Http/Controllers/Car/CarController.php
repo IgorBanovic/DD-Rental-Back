@@ -9,8 +9,8 @@ use App\Http\Services\CarService;
 
 class CarController extends Controller
 {
-    public function index(CarService $carService, DateRequest $request)
+    public function index(CarService $carService, String $start, String $end)
     {
-        return new CarCollection($carService->availableCarsForDates($request->all()));
+        return new CarCollection($carService->availableCarsForDates($start, $end));
     }
 }
