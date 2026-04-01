@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ReservationCollection;
+use App\Http\Services\ReservationService;
 use App\Models\User;
 
 class UserReservationsController extends Controller
 {
-    public function index(User $user)
+    public function index(User $user, ReservationService $reservationService)
     {
-        return new ReservationCollection($user->reservations);
+        $reservations = $reservationService->userReservations($user);
+        return new ReservationCollection($reservations);
     }
 }

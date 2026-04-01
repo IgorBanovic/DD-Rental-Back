@@ -12,6 +12,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $user_id
  * @property mixed $car_id
  * @property mixed $price
+ * @property mixed $user
+ * @property mixed $car
  */
 class ReservationResource extends JsonResource
 {
@@ -26,8 +28,16 @@ class ReservationResource extends JsonResource
             'id' => $this->id,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'user_id' => $this->user_id,
-            'car_id' => $this->car_id,
+            'user' => [
+                'id' => $this->user_id,
+                'name' => $this->user->name,
+            ],
+            'car' => [
+                'id' => $this->car_id,
+                'type' => $this->car->type,
+                'brand' => $this->car->brand,
+                'year' => $this->car->year
+            ],
             'price' => $this->price
         ];
     }

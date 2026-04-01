@@ -53,10 +53,10 @@ class CarService
         Storage::disk('public')->delete($car->image);
     }
 
-    public function availableCarsForDates(array $data): array
+    public function availableCarsForDates(string $start, string $end): array
     {
-        $start = Carbon::parse($data['start']);
-        $end = Carbon::parse($data['end']);
+        $start = Carbon::parse($start);
+        $end = Carbon::parse($end);
         $cars = Car::all();
         $filteredCars = [];
 

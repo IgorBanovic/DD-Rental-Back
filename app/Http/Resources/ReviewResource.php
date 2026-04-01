@@ -11,6 +11,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $comment
  * @property mixed $user_id
  * @property mixed $car_id
+ * @property mixed $user
+ * @property mixed $car
  */
 class ReviewResource extends JsonResource
 {
@@ -25,7 +27,10 @@ class ReviewResource extends JsonResource
             'id' => $this->id,
             'rate' => $this->rate,
             'email' => $this->comment,
-            'user_id' => $this->user_id,
+            'user' => [
+                'id' => $this->user_id,
+                'name' => $this->user->name,
+            ],
             'car_id' => $this->car_id
         ];
     }

@@ -3,8 +3,10 @@
 namespace App\Http\Services;
 
 use App\Models\Reservation;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Collection;
 
 class ReservationService
 {
@@ -61,5 +63,10 @@ class ReservationService
         if(!$reservation->delete()){
             throw new Exception('Error deleting reservation', 500);
         }
+    }
+
+    public function userReservations(User $user): Collection
+    {
+        return Reservation::with(['user', 'car'])->where('user_id', $user->id)->get();
     }
 }

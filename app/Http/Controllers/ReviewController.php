@@ -23,6 +23,7 @@ class ReviewController extends Controller
 
     public function show(Review $review)
     {
+        $review = Review::with(['user', 'car'])->findOrFail($review->id);
         return new ReviewResource($review);
     }
     public function update(Review $review, UpdateReviewRequest $request, ReviewService $reviewService)
