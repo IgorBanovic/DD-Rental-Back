@@ -14,7 +14,8 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        return new ReservationCollection(Reservation::all());
+        $reservations = Reservation::with(['car', 'user'])->get();
+        return new ReservationCollection($reservations);
     }
 
     public function store(StoreReservationRequest $request, ReservationService $reservationService)
@@ -30,6 +31,7 @@ class ReservationController extends Controller
     public function show(Reservation $reservation)
     {
         $this->authorize('view', $reservation);
+        $reservation = Reservation::with(['user', 'car'])->findOrFail($reservation->id);
         return new ReservationResource($reservation);
     }
 

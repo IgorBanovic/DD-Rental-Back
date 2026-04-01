@@ -2,8 +2,10 @@
 
 namespace App\Http\Services;
 
+use App\Models\Car;
 use App\Models\Review;
 use Exception;
+use Illuminate\Support\Collection;
 
 class ReviewService
 {
@@ -38,5 +40,10 @@ class ReviewService
         if(!$review->delete()){
             throw new Exception('Error deleting review', 500);
         }
+    }
+
+    public function carReviews(Car $car): Collection
+    {
+        return Review::with(['user', 'car'])->where('car_id', $car->id)->get();
     }
 }
