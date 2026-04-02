@@ -38,7 +38,7 @@ class ReservationController extends Controller
     public function update(UpdateReservationRequest $request, Reservation $reservation, ReservationService $reservationService)
     {
         try{
-            $reservation = $reservationService->update($request->validated, $reservation);
+            $reservation = $reservationService->update($request->validated(), $reservation);
             return new ReservationResource($reservation);
         }catch(Exception $e){
             return response()->json(['error' => $e->getMessage()], $e->getCode());

@@ -24,7 +24,7 @@ class UpdateCarRequest extends FormRequest
     {
         return [
             'type' => 'required|in:coupe,limousine,SUV',
-            'brand' => 'required|in:Volkswagon,Skoda',
+            'brand' => 'required|in:Volkswagen,Skoda',
             'year' => 'required|integer|min:2000|max:' . date('Y'),
             'price' => 'required|numeric',
             'status' => 'required|in:returned,in use,reserved',
