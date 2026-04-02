@@ -1,35 +1,37 @@
 <?php
 
 use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
-    $response = $this->post('/login', [
+    $response = $this->postJson('/api/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
 
-    $this->assertAuthenticated();
-    $response->assertNoContent();
+    $response
+        ->assertOk()
+        ->assertJsonStructure(['token', 'user' => ['id', 'name', 'email']]);
 });
 
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/login', [
+    $response = $this->postJson('/api/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
 
-    $this->assertGuest();
+    $response->assertStatus(422);
 });
 
 test('users can logout', function () {
     $user = User::factory()->create();
+    Sanctum::actingAs($user);
 
-    $response = $this->actingAs($user)->post('/logout');
+    $response = $this->postJson('/api/logout');
 
-    $this->assertGuest();
     $response->assertNoContent();
 });

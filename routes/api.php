@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/reviews', ReviewController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 Route::get('/cars/{start}/{end}', [CarController::class, 'index']);
 Route::get('/cars/{car}/reviews', [CarReviewsController::class, 'index']);
 Route::get('/cars', [CarAdminController::class, 'index']);
