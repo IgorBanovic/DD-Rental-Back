@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $id
  * @property mixed $name
  * @property mixed $email
+ * @property mixed $is_admin
  */
 class UserResource extends JsonResource
 {
@@ -19,10 +20,15 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $resource = [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email
         ];
+
+        if(auth()->user()->is_admin)
+            $resource['is_admin'] = $this->is_admin;
+
+        return $resource;
     }
 }

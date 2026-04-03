@@ -24,15 +24,19 @@ class CarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $resource = [
             'id' => $this->id,
             'type' => $this->type,
             'brand' => $this->brand,
             'year' => $this->year,
             'price' => $this->price,
-            'status' => $this->status,
             'description' => $this->description,
             'image' => $this->image
         ];
+
+        if(auth()->user()->is_admin)
+            $resource['status'] = $this->status;
+
+        return $resource;
     }
 }
