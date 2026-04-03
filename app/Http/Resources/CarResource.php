@@ -29,7 +29,7 @@ class CarResource extends JsonResource
             'type' => $this->type,
             'brand' => $this->brand,
             'year' => $this->year,
-            'status' => $this->when(auth()->check() && auth()->user()->is_admin, $this->status),
+            'status' => $this->status,
             'price' => $this->price,
             'description' => $this->description,
             'image' => $this->image,
