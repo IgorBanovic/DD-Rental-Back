@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReservationsController;
 use Illuminate\Support\Facades\Route;
 
+require __DIR__ . '/auth.php';
+
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('/cars', CarAdminController::class)->except(['index', 'show']);
     Route::apiResource('/users', UserController::class)->except(['show', 'update']);
@@ -23,7 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/users/{user}', [UserController::class, 'update']);
 });
 
-require __DIR__ . '/auth.php';
 Route::get('/cars/{car}/reviews', [CarReviewsController::class, 'index']);
 Route::get('/cars/{start}/{end}', [CarController::class, 'index']);
 Route::get('/cars', [CarAdminController::class, 'index']);
