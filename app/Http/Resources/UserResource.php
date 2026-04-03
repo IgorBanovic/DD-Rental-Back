@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'is_admin' => $this->is_admin->when(auth()->user()->is_admin)
+            'is_admin' => $this->when(auth()->user()->is_admin, $this->is_admin)
         ];
     }
 }
