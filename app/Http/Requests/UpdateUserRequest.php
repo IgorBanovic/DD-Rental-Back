@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class UpdateUserRequest extends FormRequest
 {
     /**
@@ -13,7 +14,8 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->route('user');
+        return $this->user()->can('update', $user);
     }
 
     /**

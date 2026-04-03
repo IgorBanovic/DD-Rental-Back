@@ -1,0 +1,57 @@
+services:
+  app:  # PHP-FPM (Laravel) + Nginx (WebServer) kontejner
+    image: serversideup/php:8.3-fpm-nginx
+    ports:
+      - "8080:8080" # Zahtijevi na port 8080 na host-u se prosljeđuju na port 8080 unutar kontejnera gdje je Nginx konfigurisan da slusa
+    volumes:
+      - .:/var/www/html # Ovo koristimo samo za razvoj, u produkciji bi trebalo koristiti COPY u Dockerfile
+    environment:
+
+      # OS level parametri da ne bi .env editovali..
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: pripravnici
+      DB_USERNAME: pripravnici
+      DB_PASSWORD: sifrapripravnika
+      MAIL_MAILER: smtp
+      MAIL_HOST: mail
+      MAIL_PORT: 1025
+
+      # Fix koji se koristi za razvoj na Linuxu kako bi se izbjegli problemi sa permisijama, na produkciji ovo nije potrebno
+      PUID: 1000
+      PGID: 1000
+
+    depends_on: # Ovo govori dockeru da bi startovao app mora prvo da potvrdi da je baza zdrava (odardi healtcheck iz db servisa) i da je mail servis startovan
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+
+
+  db: # PostgreSQL kontejner
+    image: postgres:18
+    ports:
+      - "5432:5432" # Isto kao za app, ovo je samo za razvoj, u produkciji nije potrebno izlagati bazu na hostu
+    environment:
+      POSTGRES_DB: pripravnici
+      POSTGRES_USER: pripravnici
+      POSTGRES_PASSWORD: sifrapripravnika
+    volumes:
+      - pgdata:/var/lib/postgresql # Da bi podaci u bazi ostali nakon restartovanja kontejnera
+
+    healthcheck: # Ovo govori Dockeru kako da provjeri je li baza spremna za prihvatanje konekcija, koristi se za depends_on da bi app sačekao da baza bude spremna
+      test: [ "CMD-SHELL", "pg_isready -U pripravnici" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  mail: # Fake SMTP server, umjesto MailGun-a, na produkciji mailgun sa stvarnim kredencijalima vasim..
+    image: axllent/mailpit
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+volumes:
+  pgdata:
