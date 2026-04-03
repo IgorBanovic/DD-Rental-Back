@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('/cars', CarAdminController::class)->except(['index', 'show']);
-    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/users', UserController::class)->except(['show', 'update']);
     Route::get('/reservations', [ReservationController::class, 'index']);
-    Route::apiResource('/reviews', ReviewController::class);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/reservations', [UserReservationsController::class, 'index']);
     Route::apiResource('/reservations', ReservationController::class)->except('index');
     Route::apiResource('/reviews', ReviewController::class);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::put('/users/{user}', [UserController::class, 'update']);
 });
 
 require __DIR__ . '/auth.php';

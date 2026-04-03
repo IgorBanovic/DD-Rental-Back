@@ -32,6 +32,7 @@ class CarService
         if(!$car->update(collect($data)->except('image')->toArray())){
             throw new Exception('Error updating car', 500);
         }
+
         Storage::disk('public')->delete($car->image);
         $path = $data['image']->store('images', 'public');
 
