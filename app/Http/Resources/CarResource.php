@@ -11,9 +11,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $brand
  * @property mixed $year
  * @property mixed $price
- * @property mixed $status
  * @property mixed $description
  * @property mixed $image
+ * @property mixed $status
  */
 class CarResource extends JsonResource
 {
@@ -24,19 +24,15 @@ class CarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $resource = [
+        return [
             'id' => $this->id,
             'type' => $this->type,
             'brand' => $this->brand,
             'year' => $this->year,
+            'status' => $this->status->when(auth()->check() && auth()->user()->is_admin),
             'price' => $this->price,
             'description' => $this->description,
-            'image' => $this->image
+            'image' => $this->image,
         ];
-
-        if(auth()->user()->is_admin)
-            $resource['status'] = $this->status;
-
-        return $resource;
     }
 }
