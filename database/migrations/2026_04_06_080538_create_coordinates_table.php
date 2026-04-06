@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('coordinates', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('brand');
-            $table->string('year');
-            $table->decimal('price', 10);
-            $table->string('status');
-            $table->text('description');
-            $table->string('image');
             $table->float('latitude');
             $table->float('longitude');
+            $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('coordinates');
     }
 };

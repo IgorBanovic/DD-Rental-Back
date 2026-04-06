@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Car;
+namespace App\Http\Requests\Coordinate;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCarRequest extends FormRequest
+class StoreCoordinateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,9 @@ class StoreCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required|in:coupe,limousine,SUV',
-            'brand' => 'required|in:Volkswagen,Skoda',
-            'year' => 'required|numeric|min:2000|max:' . date('Y'),
-            'price' => 'required|numeric',
-            'status' => 'required|in:returned,in use,reserved',
-            'description' => 'required|string|min:50|max:250',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'car_id' => 'required|exists:cars,id',
         ];
     }
 }
