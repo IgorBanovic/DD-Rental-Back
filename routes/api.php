@@ -3,18 +3,22 @@
 use App\Http\Controllers\Car\CarController as CarController;
 use App\Http\Controllers\Car\CarReviewsController;
 use App\Http\Controllers\CarController as CarAdminController;
+use App\Http\Controllers\CarReportController;
+use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReservationsController;
 use Illuminate\Support\Facades\Route;
 
-require __DIR__ . '/auth.php';
-
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('/cars', CarAdminController::class)->except(['index', 'show']);
     Route::apiResource('/users', UserController::class)->except(['show', 'update']);
     Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::get('/reports/car-performance', [CarReportController::class, 'carPerformance']);
+    Route::get('/reports/car-performance/download', [CarReportController::class, 'downloadCarPerformancePdf']);
+    Route::get('/reports/customer-satisfaction', [UserReportController::class, 'customerSatisfaction']);
+    Route::get('/reports/customer-satisfaction/download', [UserReportController::class, 'downloadCustomerSatisfactionPdf']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -25,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/users/{user}', [UserController::class, 'update']);
 });
 
+require __DIR__ . '/auth.php';
 Route::get('/cars/{car}/reviews', [CarReviewsController::class, 'index']);
 Route::get('/cars/{start}/{end}', [CarController::class, 'index']);
 Route::get('/cars', [CarAdminController::class, 'index']);
