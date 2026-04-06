@@ -4,6 +4,7 @@ use App\Http\Controllers\Car\CarController as CarController;
 use App\Http\Controllers\Car\CarReviewsController;
 use App\Http\Controllers\CarController as CarAdminController;
 use App\Http\Controllers\CarReportController;
+use App\Http\Controllers\CoordinateController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
@@ -19,6 +20,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/reports/car-performance/download', [CarReportController::class, 'downloadCarPerformancePdf']);
     Route::get('/reports/customer-satisfaction', [UserReportController::class, 'customerSatisfaction']);
     Route::get('/reports/customer-satisfaction/download', [UserReportController::class, 'downloadCustomerSatisfactionPdf']);
+    Route::apiResource('/coordinates', CoordinateController::class);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

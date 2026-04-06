@@ -15,7 +15,9 @@ class Car extends Model
         'price',
         'status',
         'description',
-        'image'
+        'image',
+        'latitude',
+        'longitude',
     ];
 
     use HasFactory;
@@ -28,5 +30,10 @@ class Car extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function coordinates(): HasMany
+    {
+        return $this->hasMany(Coordinate::class);
     }
 }
