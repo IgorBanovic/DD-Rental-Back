@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Car\CarController as CarController;
+use App\Http\Controllers\Car\CarMovementController;
 use App\Http\Controllers\Car\CarReviewsController;
 use App\Http\Controllers\CarController as CarAdminController;
 use App\Http\Controllers\CarReportController;
@@ -21,6 +22,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/reports/customer-satisfaction', [UserReportController::class, 'customerSatisfaction']);
     Route::get('/reports/customer-satisfaction/download', [UserReportController::class, 'downloadCustomerSatisfactionPdf']);
     Route::apiResource('/coordinates', CoordinateController::class);
+    Route::post('/cars/start', [CarMovementController::class, 'start']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
