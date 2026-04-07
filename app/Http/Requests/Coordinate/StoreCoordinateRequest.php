@@ -25,6 +25,7 @@ class StoreCoordinateRequest extends FormRequest
         return [
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'order' => 'required|integer|between:1,100',
             'car_id' => 'required|exists:cars,id',
         ];
     }

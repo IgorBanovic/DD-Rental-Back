@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->float('latitude');
             $table->float('longitude');
+            $table->integer('order');
             $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
             $table->timestamps();
         });

@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('image');
             $table->float('latitude');
             $table->float('longitude');
+            $table->float('target_latitude')->nullable();
+            $table->float('target_longitude')->nullable();
+            $table->integer('target_index')->default(0);
             $table->timestamps();
         });
     }

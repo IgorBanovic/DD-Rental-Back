@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property mixed $target_latitude
+ * @property mixed $target_longitude
+ * @property mixed $target_index
+ * @property mixed $latitude
+ * @property mixed $longitude
+ */
 class Car extends Model
 {
     protected $fillable = [

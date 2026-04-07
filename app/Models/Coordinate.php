@@ -11,6 +11,7 @@ class Coordinate extends Model
     protected $fillable = [
         'latitude',
         'longitude',
+        'order',
         'car_id'
     ];
 
