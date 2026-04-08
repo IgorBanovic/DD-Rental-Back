@@ -6,6 +6,7 @@ use App\Http\Controllers\Car\CarReviewsController;
 use App\Http\Controllers\CarController as CarAdminController;
 use App\Http\Controllers\CarReportController;
 use App\Http\Controllers\CoordinateController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\ReservationController;
@@ -35,6 +36,8 @@ Route::middleware(['auth:sanctum', 'check_blocked'])->group(function () {
     Route::apiResource('/reviews', ReviewController::class);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::get('/reservations/{reservation}/invoice', [InvoiceController::class, 'show']);
+    Route::get('/reservations/{reservation}/invoice/download', [InvoiceController::class, 'download']);
 });
 
 Route::get('/cars/{car}/reviews', [CarReviewsController::class, 'index']);
