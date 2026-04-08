@@ -57,7 +57,7 @@ class ReservationService
      */
     public function destroy(Reservation $reservation): void
     {
-        if($reservation->start_date < now()->addHours(48)) {
+        if($reservation->start_date < now()->addHours(48) && !auth()->user()->is_admin) {
             throw new Exception('The reservation cannot be cancelled in less than 48 hours prior start', 403);
         }
         if(!$reservation->delete()){

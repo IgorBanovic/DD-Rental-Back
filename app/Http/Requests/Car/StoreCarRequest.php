@@ -27,7 +27,7 @@ class StoreCarRequest extends FormRequest
             'brand' => 'required|in:Volkswagen,Skoda',
             'year' => 'required|numeric|min:2000|max:' . date('Y'),
             'price' => 'required|numeric',
-            'status' => 'required|in:returned,in use,reserved',
+            'status' => 'required|in:available,in use,broken down,on maintenance',
             'description' => 'required|string|min:50|max:250',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'latitude' => 'required|numeric',
