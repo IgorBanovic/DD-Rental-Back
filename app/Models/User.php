@@ -14,6 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @property mixed $is_admin
  * @property mixed $reviews_avg_rate
+ * @property mixed $is_blocked
  * @method deleteUser()
  */
 class User extends Authenticatable implements MustVerifyEmail

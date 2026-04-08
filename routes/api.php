@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('/maintenances', MaintenanceController::class);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'check_blocked'])->group(function () {
     Route::get('/users/{user}/reservations', [UserReservationsController::class, 'index']);
     Route::apiResource('/reservations', ReservationController::class)->except('index');
     Route::apiResource('/reviews', ReviewController::class);
