@@ -18,7 +18,7 @@ class CheckBlockedUsers
     {
         $user = Auth::user();
         if (!$user || $user->is_blocked === true) {
-            return response()->json(['message' => 'This user is blocked'], 403);
+            return response()->json(['message' => 'Permission denied'], 403);
         }
         return $next($request);
     }

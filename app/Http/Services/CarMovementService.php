@@ -51,6 +51,7 @@ class CarMovementService
     public function moveAll(): JsonResponse
     {
         $cars = Car::where('status', 'in use')->get();
+
         foreach ($cars as $car) {
             $this->move($car);
         }
