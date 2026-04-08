@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Car;
+namespace App\Http\Requests\Maintenance;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCarRequest extends FormRequest
+class UpdateMaintenanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,9 @@ class UpdateCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required|in:coupe,limousine,SUV',
-            'brand' => 'required|in:Volkswagen,Skoda',
-            'year' => 'required|integer|min:2000|max:' . date('Y'),
-            'price' => 'required|numeric',
-            'status' => 'required|in:available,in use,broken down,on maintenance',
+            'appointment' => 'required|date|after:today',
             'description' => 'required|string|min:50|max:250',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'car_id' => 'required|exists:cars,id',
         ];
     }
 }

@@ -43,4 +43,9 @@ class Car extends Model
     {
         return $this->hasMany(Coordinate::class);
     }
+
+    public function maintenances(): HasMany
+    {
+        return $this->hasMany(Maintenance::class);
+    }
 }

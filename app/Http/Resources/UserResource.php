@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $name
  * @property mixed $email
  * @property mixed $is_admin
+ * @property mixed $is_blocked
  */
 class UserResource extends JsonResource
 {
@@ -25,6 +26,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'is_admin' => $this->when(auth()->user()->is_admin, $this->is_admin),
+            'is_blocked' => $this->when(auth()->user()->is_blocked, $this->is_blocked)
         ];
     }
 }
