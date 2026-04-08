@@ -16,8 +16,8 @@ class CarService
     {
         $car = new Car($data);
         $path = $data['image']->store('images', 'public');
-
         $car->image = $path;
+
         if(!$car->save()) {
             throw new Exception('Error saving car', 500);
         }
@@ -33,12 +33,14 @@ class CarService
             throw new Exception('Error updating car', 500);
         }
 
-        Storage::disk('public')->delete($car->image);
-        $path = $data['image']->store('images', 'public');
+        if (isset($data['image'])) {
+            Storage::disk('public')->delete($car->image);
+            $path = $data['image']->store('images', 'public');
+            $car->image = $path;
 
-        $car->image = $path;
-        if(!$car->save()){
-            throw new Exception('Error saving car', 500);
+            if(!$car->save()){
+                throw new Exception('Error saving car', 500);
+            }
         }
         return $car;
     }
