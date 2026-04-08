@@ -8,6 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserReportController extends Controller
 {
+
     public function customerSatisfaction(UserReportService $reportService)
     {
         try {

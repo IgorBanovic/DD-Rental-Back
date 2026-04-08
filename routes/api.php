@@ -19,25 +19,23 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('/cars', CarAdminController::class)->except(['index', 'show']);
     Route::apiResource('/users', UserController::class)->except(['show', 'update']);
-    Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::apiResource('/reservations', ReservationController::class)->only('index');
     Route::get('/reports/car-performance', [CarReportController::class, 'carPerformance']);
     Route::get('/reports/car-performance/download', [CarReportController::class, 'downloadCarPerformancePdf']);
     Route::get('/reports/customer-satisfaction', [UserReportController::class, 'customerSatisfaction']);
     Route::get('/reports/customer-satisfaction/download', [UserReportController::class, 'downloadCustomerSatisfactionPdf']);
     Route::apiResource('/coordinates', CoordinateController::class);
-    Route::post('/cars/start', [CarMovementController::class, 'start']);
+    Route::apiResource('/cars/start', CarMovementController::class);
     Route::apiResource('/maintenances', MaintenanceController::class);
 });
 
 Route::middleware(['auth:sanctum', 'check_blocked'])->group(function () {
-    Route::get('/users/{user}/reservations', [UserReservationsController::class, 'index']);
+    Route::apiResource('/users/{user}/reservations', UserReservationsController::class)->only('index');
     Route::apiResource('/reservations', ReservationController::class)->except('index');
     Route::apiResource('/reviews', ReviewController::class);
-    Route::get('/users/{user}', [UserController::class, 'show']);
-    Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::apiResource('/users', UserController::class)->only(['index']);
 });
 
-Route::get('/cars/{car}/reviews', [CarReviewsController::class, 'index']);
-Route::get('/cars/{start}/{end}', [CarController::class, 'index']);
-Route::get('/cars', [CarAdminController::class, 'index']);
-Route::get('/cars/{car}', [CarAdminController::class, 'show']);
+Route::apiResource('/cars/{car}/reviews', CarReviewsController::class)->only('index');
+Route::apiResource('/cars/{start}/{end}', CarController::class)->only('index');
+Route::apiResource('/cars', CarAdminController::class)->only(['index', 'show']);
