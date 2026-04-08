@@ -6,6 +6,7 @@ use App\Http\Controllers\Car\CarReviewsController;
 use App\Http\Controllers\CarController as CarAdminController;
 use App\Http\Controllers\CarReportController;
 use App\Http\Controllers\CoordinateController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\ReservationController;
