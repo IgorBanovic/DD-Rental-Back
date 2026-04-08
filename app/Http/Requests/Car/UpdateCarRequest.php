@@ -29,7 +29,7 @@ class UpdateCarRequest extends FormRequest
             'price' => 'required|numeric',
             'status' => 'required|in:available,in use,broken down,on maintenance',
             'description' => 'required|string|min:50|max:250',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }
