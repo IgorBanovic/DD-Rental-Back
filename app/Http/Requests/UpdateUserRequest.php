@@ -30,8 +30,10 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
         ];
 
-        if(auth()->user()->is_admin)
+        if(auth()->user()->is_admin) {
             $rules['is_admin'] = ['boolean'];
+            $rules['is_blocked'] = ['boolean'];
+        }
 
         return $rules;
     }
