@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Reports;
-use Barryvdh\DomPDF\PDF;
 
 interface IReport
 {
-    public function getReportType(string $view, array $params = []): PDF;
+    public function getReportType(string $view, array $params = []);
 
     public function getData(array $params = []): array;
 
