@@ -60,20 +60,9 @@ class CarService
     {
         $start = Carbon::parse($start);
         $end = Carbon::parse($end);
-        $cars = Car::all();
-        $filteredCars = [];
 
-        foreach ($cars as $car) {
-            foreach ($car->reservations as $reservation) {
-                if($start->between($reservation->start_date, $reservation->end_date) ||
-                    $end->between($reservation->start_date, $reservation->end_date) ||
-                    ($start <= $reservation->start_date && $end >= $reservation->end_date))
-                {
-                    continue 2;
-                }
-            }
-            $filteredCars[] = $car->withoutRelations();
-        }
-        return $filteredCars;
+        $cars = Car::availableForDates($start, $end)->get();
+
+        return $cars->toArray();
     }
 }
