@@ -26,7 +26,7 @@ class Invoice implements IReport
     public function download(array $params = []): string
     {
         $reservation = $params['reservation'];
-        $data = $this->getData($params['reservation']);
+        $data = $this->getData(['reservation' => $params['reservation']]);
         $pdf = $this->getReportType('invoice.invoice', $data);
         return $pdf->download('invoice-' . $reservation->id . '.pdf');
     }
