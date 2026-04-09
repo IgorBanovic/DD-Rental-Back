@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Reports;
 
-use Illuminate\Support\Collection;
 use App\Models\User;
+use Barryvdh\DomPDF\PDF;
 
-
-class UserReportService
+class UserReport implements IReport
 {
-    public function getCustomerSatisfactionReport(): Collection
+    public function getReportType(string $view, array $params = []): PDF
+    {
+        return PDF::loadView($view, $params);
+    }
+
+    public function getData(?array $params = []): array
     {
         return User::query()
             ->where('is_admin', false)
@@ -28,10 +32,10 @@ class UserReportService
                     'last_feedback' => $user->reviews->first()?->comment ?? 'No feedback yet',
                     'sentiment' => $this->calculateSentiment($user->reviews_avg_rate),
                 ];
-            });
+            })->toArray();
     }
 
-    public function calculateSentiment(?float $avgRate): string
+    private function calculateSentiment(?float $avgRate): string
     {
         if ($avgRate === null) return 'Neutral';
         if ($avgRate >= 8.5) return 'Very Happy';
@@ -40,4 +44,15 @@ class UserReportService
         return 'Unhappy';
     }
 
+    public function download(?array $params = []): string
+    {
+        $reportData = $this->getData();
+
+        $pdf = $this->getReportType('reports.customer_satisfaction', [
+            'data' => $reportData,
+            'generated_at' => now()->toDateTimeString()
+        ]);
+
+        return $pdf->download('customer-satisfaction-report.pdf');
+    }
 }
