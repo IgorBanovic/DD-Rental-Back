@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum', 'check_blocked'])->group(function () {
     Route::apiResource('/users/{user}/reservations', UserReservationsController::class)->only('index');
     Route::apiResource('/reservations', ReservationController::class)->except('index');
     Route::apiResource('/reviews', ReviewController::class);
-    Route::apiResource('/users', UserController::class)->only(['index']);
+    Route::apiResource('/users', UserController::class)->only(['show', 'update']);
     Route::get('invoice/{reservation}', [ReportController::class, 'invoice']);
 });
 

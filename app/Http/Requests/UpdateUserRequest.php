@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['sometimes', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
         ];
 
         if(auth()->user()->is_admin) {
