@@ -30,4 +30,15 @@ class Invoice implements IReport
         $pdf = $this->getReportType('invoice.invoice', $data);
         return $pdf->download('invoice-' . $reservation->id . '.pdf');
     }
+
+    public array $parameters {
+        get {
+            return null;
+        }
+    }
+
+    public function validate(array $data): bool
+    {
+        return true;
+    }
 }

@@ -19,10 +19,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('/cars', CarAdminController::class)->except(['index', 'show']);
     Route::apiResource('/users', UserController::class)->except(['show', 'update']);
     Route::apiResource('/reservations', ReservationController::class)->only('index');
-    Route::controller(ReportController::class)->group(function () {
-        Route::get('reports/cars/{start}/{end}', 'carReport');
-        Route::get('reports/users', 'customerReport');
-    });
+    Route::apiResource('/reports', ReportController::class)->only('create');
     Route::apiResource('/coordinates', CoordinateController::class);
     Route::apiResource('/cars/start', CarMovementController::class);
     Route::apiResource('/maintenances', MaintenanceController::class);

@@ -55,4 +55,15 @@ class UserReport implements IReport
 
         return $pdf->download('customer-satisfaction-report.pdf');
     }
+
+    public array $parameters {
+        get {
+            return null;
+        }
+    }
+
+    public function validate(array $data): bool
+    {
+        return true;
+    }
 }
