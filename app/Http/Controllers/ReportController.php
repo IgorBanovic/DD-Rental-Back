@@ -2,37 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
 use App\Reports\CarReport;
 use App\Reports\Invoice;
+use App\Reports\IReport;
 use App\Reports\UserReport;
+use Illuminate\Http\Request;
 use Validator;
 
 class ReportController extends Controller
 {
-    public function carReport(string $start, string $end)
-    {
-        $validator = Validator::make(
-            compact('start', 'end'),
-            [
-                'start' => 'required|date',
-                'end' => 'required|date|after:start',
-            ]
-        );
-        $validated = $validator->validate();
-        $report = new CarReport();
-        return $report->download(['start' => $validated['start'], 'end' => $validated['end']]);
-    }
+    private array $mapping = [
+        'invoice' => Invoice::class,
+        'user' => UserReport::class,
+        'car' => CarReport::class
+    ];
 
-    public function customerReport()
+    public function create(Request $request)
     {
-        $report = new UserReport();
-        return $report->download();
-    }
-
-    public function invoice(Reservation $reservation)
-    {
-        $report = new Invoice();
-        return $report->download(['reservation' => $reservation]);
+        /** @var IReport $report */
+        $validator = Validator::make($request->all(), [
+            'report' => 'required|string|in:car,invoice,user'
+        ]);
+        if (!$validator->fails()) {
+            $report = new $this->mapping[$request->report]();
+            if (!$report->validate($request->all())) {
+                return response()->json(['Validation error', 403]);
+            }
+            return $report->download($request->all());
+        }
+        else{
+            return response()->json(['Validation error', 403]);
+        }
     }
 }

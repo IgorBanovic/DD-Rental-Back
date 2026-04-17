@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
+    use HasFactory;
+
     //
     protected $fillable = [
         'start_date',
@@ -16,7 +18,6 @@ class Reservation extends Model
         'car_id'
     ];
 
-    use HasFactory;
 
     public function car(): BelongsTo
     {

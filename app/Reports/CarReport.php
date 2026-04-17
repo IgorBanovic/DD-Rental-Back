@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\PDF;
+use Validator;
 
 class CarReport implements IReport
 {
@@ -25,7 +26,9 @@ class CarReport implements IReport
                 DB::raw('COUNT(reservations.id) as total_bookings'))
 
             ->whereBetween('reservations.start_date',
-                [Carbon::parse($params['start'])->startOfDay(),Carbon::parse($params['end'])->endOfDay()])
+                [
+                    Carbon::parse($params['start'])->startOfDay(),
+                    Carbon::parse($params['end'])->endOfDay()])
 
             ->groupBy('cars.id',
                 'cars.brand',
@@ -46,5 +49,25 @@ class CarReport implements IReport
         ]);
 
         return $pdf->download('car-performance-report.pdf');
+    }
+
+    public array $parameters {
+        get {
+            return ['report', 'start', 'end'];
+        }
+    }
+    public function validate(array $data): bool
+    {
+        $validator = Validator::make($data, [
+            'start' => 'required|date',
+            'end' => 'required|date'
+        ]);
+
+        if($validator->fails()) {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }
